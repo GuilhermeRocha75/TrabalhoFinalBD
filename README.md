@@ -1,9 +1,9 @@
 # TrabalhoFinalBD
 
-NOMES: Guilherme Rocha - Renan Isidoro - Thaylon Santos
+# NOMES: Guilherme Rocha - Renan Isidoro - Thaylon Santos
 
 
-CODIGO MYSQL:
+## CODIGO MYSQL:
 create database trabalhofinalbd;
 use trabalhofinalbd;
 
