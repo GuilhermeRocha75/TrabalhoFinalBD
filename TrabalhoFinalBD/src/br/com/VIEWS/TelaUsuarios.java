@@ -5,17 +5,49 @@
  */
 package br.com.VIEWS;
 
+import br.com.DAO.ConexaoDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author aluno.saolucas
  */
 public class TelaUsuarios extends javax.swing.JFrame {
 
+     Connection conexao = null;
+   PreparedStatement pst = null;
+   ResultSet rs = null;
+    
     /**
      * Creates new form TelaUsuarios
      */
     public TelaUsuarios() {
         initComponents();
+        conexao = ConexaoDAO.conector();
+    }
+    
+    public void pesquisar(){
+        //Metodo pesquisar
+        String sql = "select * from tb_usuarios where id_usuario = ?";
+        try {
+            
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtIdUsuario.getText());
+            rs = pst.executeQuery();
+            
+            if (rs.next()) { 
+                txtNomeUsuario.setText(rs.getString(2));
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
+            }
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Tela Usuário" + e);
+        }
     }
 
     /**
@@ -40,6 +72,11 @@ public class TelaUsuarios extends javax.swing.JFrame {
         jLabel1.setText("ID:");
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome:");
 
@@ -82,6 +119,11 @@ public class TelaUsuarios extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+   // Chamada do metodo Pesquisar
+   pesquisar();
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
