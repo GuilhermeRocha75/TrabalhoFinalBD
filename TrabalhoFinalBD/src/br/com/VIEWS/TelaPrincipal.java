@@ -28,6 +28,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        submenuUsuarios = new javax.swing.JMenuItem();
+        submenuClientes = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tela Principal");
@@ -35,6 +42,37 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jLabel1.setText("Tela Principal");
+
+        jMenu1.setText("Cadastrar");
+
+        submenuUsuarios.setText("Usuarios");
+        submenuUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuUsuariosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(submenuUsuarios);
+
+        submenuClientes.setText("Cliente");
+        submenuClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuClientesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(submenuClientes);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu3.setText("Relatorio");
+        jMenuBar1.add(jMenu3);
+
+        jMenu2.setText("Ajuda");
+        jMenuBar1.add(jMenu2);
+
+        jMenu4.setText("Opções");
+        jMenuBar1.add(jMenu4);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,12 +88,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(267, Short.MAX_VALUE))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void submenuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuUsuariosActionPerformed
+        //chamar tela usuario
+        TelaUsuarios tUsuario = new TelaUsuarios();
+        tUsuario.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_submenuUsuariosActionPerformed
+
+    private void submenuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_submenuClientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -94,5 +143,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem submenuClientes;
+    private javax.swing.JMenuItem submenuUsuarios;
     // End of variables declaration//GEN-END:variables
 }
