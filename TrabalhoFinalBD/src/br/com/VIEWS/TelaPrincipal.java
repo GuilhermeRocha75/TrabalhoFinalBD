@@ -124,6 +124,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //chamar tela usuario
         TelaUsuarios tUsuario = new TelaUsuarios();
         tUsuario.setVisible(true);
+         DesktopPrincipal.add(tUsuario);
         // TODO add your handling code here:
     }//GEN-LAST:event_submenuUsuariosActionPerformed
 
