@@ -19,13 +19,6 @@
           <sub><b>Renan Isidoro</b></sub>
         </a>
       </td>
-      <td align="center">
-        <a href="https://github.com/ThaylonST">
-          <img src="https://avatars.githubusercontent.com/u/136936975?v=4" width="75px;" alt="Foto de Thaylon dos Santos"/>
-          <br />
-          <sub><b>Thaylon dos Santos</b></sub>
-        </a>
-      </td>
     </tr>
   </table>
 </div>
