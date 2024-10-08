@@ -31,29 +31,8 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         conexao = ConexaoDAO.conector();
     }
 
-     public void pesquisar(){
-        //Metodo pesquisar
-        String sql = "select * from tb_usuarios where id_usuario = ?";
-        try {
-            
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtIdUsuario.getText());
-            rs = pst.executeQuery();
-            
-            if (rs.next()) { 
-                txtNomeUsuario.setText(rs.getString(2));
-                txtLoginUsuario.setText(rs.getString(3));
-                txtSenhaUsuario.setText(rs.getString(4));
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
-                limpar();
-            }
-            
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Tela Usuário" + e);
-        }
-    }
+     
+    
     public void limpar(){
         txtIdUsuario.setText(null);
         txtNomeUsuario.setText(null);
@@ -98,7 +77,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("ID:");
 
-        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/iconeExcluir.png"))); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/IconeExcluir.png"))); // NOI18N
         btnExcluir.setText("excluir");
 
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/iconePesquisar.png"))); // NOI18N
@@ -208,34 +187,64 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         
-        //Captura de dados na tela Usuario
-        int id_Usuario = Integer.parseInt(txtIdUsuario.getText()) ;
+        
+    // Verifique se qualquer um dos campos obrigatórios está vazio
+    if (txtIdUsuario.getText().trim().isEmpty() || txtLoginUsuario.getText().trim().isEmpty()) {
+        // Exibe mensagem de erro se qualquer um dos campos estiver vazio
+        JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+    } else {
+        // Captura de dados na tela Usuario
+        int id_Usuario = Integer.parseInt(txtIdUsuario.getText());
         String nome_Usuario = txtNomeUsuario.getText();
         String login_Usuario = txtLoginUsuario.getText();
         String senha_Usuario = txtSenhaUsuario.getText();
         
-        //Transferencia de dados para o UsuarioDTO
-        UsuarioDTO objUsuarioDTO = new UsuarioDTO();
-        objUsuarioDTO.setIdUsuario(id_Usuario);
-        objUsuarioDTO.setNomeUsuario(nome_Usuario);
-        objUsuarioDTO.setLoginUsuario(login_Usuario);
-        objUsuarioDTO.setSenhaUsuario(senha_Usuario);
         
-        
-        //criação do objeto da classe UsuarioDAO para inserir o usuario
         UsuarioDAO objUsuarioDAO = new UsuarioDAO();
-        objUsuarioDAO.inserirUsuario(objUsuarioDTO);
-        
-        
-          JOptionPane.showMessageDialog(null, "Usuário Cadastrado com sucesso!");
-         limpar();
-     
+
+        // Verifica se o id ou login já existem
+        if (objUsuarioDAO.verificarUsuarioExistente(id_Usuario, login_Usuario)) {
+            JOptionPane.showMessageDialog(null, "O ID ou login já estão cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Se não existir, insere o novo usuário
+            UsuarioDTO objUsuarioDTO = new UsuarioDTO();
+            objUsuarioDTO.setIdUsuario(id_Usuario);
+            objUsuarioDTO.setNomeUsuario(nome_Usuario);
+            objUsuarioDTO.setLoginUsuario(login_Usuario);
+            objUsuarioDTO.setSenhaUsuario(senha_Usuario);
+
+            objUsuarioDAO.inserirUsuario(objUsuarioDTO);
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+            limpar();
+        }
+    }
+
         
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // Chamada do metodo Pesquisar
-        pesquisar();
+        
+        // Obtém o ID do campo de texto
+    int idUsuario = Integer.parseInt(txtIdUsuario.getText());
+
+    // Cria uma instância do DAO
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+    // Chama o método pesquisar e obtém o resultado
+    UsuarioDTO usuarioDTO = usuarioDAO.pesquisarUsuario(idUsuario);
+
+    if (usuarioDTO != null) {
+        // Preenche os campos com os dados do usuário encontrado
+        txtNomeUsuario.setText(usuarioDTO.getNomeUsuario());
+        txtLoginUsuario.setText(usuarioDTO.getLoginUsuario());
+        txtSenhaUsuario.setText(usuarioDTO.getSenhaUsuario());
+    } else {
+        // Mostra uma mensagem de erro se o usuário não for encontrado
+        JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
+        limpar();  // Limpa os campos
+    }
+
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void txtIdUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdUsuarioActionPerformed
