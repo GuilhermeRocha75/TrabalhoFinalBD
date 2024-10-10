@@ -90,4 +90,36 @@ public class UsuarioDAO {
         return existe;
     }
     
+    
+    //Metodo editar
+    public void editar(UsuarioDTO objUsarioDTO){
+        String sql = "update tb_usuarios set usuario = ?, login = ?, senha = ? where id_usuario = ?";
+         conexao = ConexaoDAO.conector();
+         try {
+               pst = conexao.prepareStatement(sql);
+               pst.setInt(4, objUsarioDTO.getIdUsuario());
+               pst.setString(1, objUsarioDTO.getNomeUsuario());
+               pst.setString(2, objUsarioDTO.getLoginUsuario());
+               pst.setString(3, objUsarioDTO.getSenhaUsuario());
+               
+               int add = pst.executeUpdate();
+               if (add >0){
+                   JOptionPane.showMessageDialog(null, "Usuário editado com sucesso!");
+                    //pesquisaAuto();
+                    conexao.close();
+                    //limparCampos();
+               }
+               
+            
+        } catch (Exception e) {
+        JOptionPane.showMessageDialog(null," Método editar " + e);
+        
+        }
+    }
+    
+    
+    
+    
+    
+    
 }

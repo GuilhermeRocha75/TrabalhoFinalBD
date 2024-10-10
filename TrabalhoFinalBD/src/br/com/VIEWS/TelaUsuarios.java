@@ -53,7 +53,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
 
         btnIncluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        btnExcluir = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnPesquisar = new javax.swing.JButton();
         txtIdUsuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -63,6 +63,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         btnLimpar = new javax.swing.JButton();
         txtLoginUsuario = new javax.swing.JTextField();
         txtSenhaUsuario = new javax.swing.JPasswordField();
+        btnExcluir1 = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -77,8 +78,13 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("ID:");
 
-        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/IconeExcluir.png"))); // NOI18N
-        btnExcluir.setText("excluir");
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/iconeEditar.png"))); // NOI18N
+        btnEditar.setText("editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/iconePesquisar.png"))); // NOI18N
         btnPesquisar.setText("Pesquisar");
@@ -117,6 +123,9 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
+        btnExcluir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/IconeExcluir.png"))); // NOI18N
+        btnExcluir1.setText("excluir");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,12 +134,9 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnExcluir)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnPesquisar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnLimpar)))
+                        .addComponent(btnPesquisar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLimpar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnIncluir))
                     .addGroup(layout.createSequentialGroup()
@@ -150,7 +156,13 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                                 .addGap(28, 28, 28)
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(btnEditar)
+                        .addGap(36, 36, 36)
+                        .addComponent(btnExcluir1)
+                        .addGap(67, 67, 67)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -177,9 +189,11 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -260,9 +274,34 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLoginUsuarioActionPerformed
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        
+       //Botao editar(msm codigo btn inlcuir)
+        int id_usuario = Integer.parseInt(txtIdUsuario.getText());
+        String nome_usuario = txtNomeUsuario.getText();
+        String login_usuario = txtLoginUsuario.getText();
+        String senha_usuario = txtSenhaUsuario.getText();
+
+
+        UsuarioDTO objusuarioDTO = new UsuarioDTO();
+        objusuarioDTO.setIdUsuario (id_usuario);
+        objusuarioDTO.setNomeUsuario (nome_usuario);
+        objusuarioDTO.setLoginUsuario (login_usuario);
+        objusuarioDTO.setSenhaUsuario(senha_usuario);
+
+            UsuarioDAO objUsuarioDAO = new UsuarioDAO();       
+            objUsuarioDAO.editar(objusuarioDTO);
+            limpar();
+        
+    
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir1;
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnPesquisar;
