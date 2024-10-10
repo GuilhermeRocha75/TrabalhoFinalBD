@@ -2,6 +2,8 @@
 package br.com.VIEWS;
 
 import br.com.DAO.ConexaoDAO;
+import br.com.DAO.UsuarioDAO;
+import br.com.DTO.UsuarioDTO;
 import java.sql.*;
 import java.awt.*;
 
@@ -23,7 +25,7 @@ public class TelaLogin extends javax.swing.JFrame {
    PreparedStatement pst = null;
    ResultSet rs = null;
    
-    public void logar(){
+   public void logar(){
         String sql = "select * from tb_usuarios where login = ? and senha = ?";
         
         try {
@@ -195,9 +197,23 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSenhaActionPerformed
 
     private void btnEntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntarActionPerformed
-      // Chamar metodo logar
-        logar();
-  
+      /*
+         // Criar uma instância de UsuarioDTO
+    UsuarioDTO objUsuarioDTO = new UsuarioDTO();
+
+    // Verifica se os campos de texto não estão nulos
+    if (TelaUsuarios.txtLoginUsuario != null && TelaUsuarios.txtSenhaUsuario != null) {
+        // Preencher os dados do objeto com os valores dos campos de texto
+        objUsuarioDTO.setLoginUsuario(TelaUsuarios.txtLoginUsuario.getText());
+        objUsuarioDTO.setSenhaUsuario(new String(TelaUsuarios.txtSenhaUsuario.getPassword())); // Se for um campo de senha
+
+        // Chamar o método logar
+        UsuarioDAO objUsuarioDAO = new UsuarioDAO();
+        objUsuarioDAO.logar(objUsuarioDTO);
+    } else {
+        JOptionPane.showMessageDialog(null, "Os campos de login ou senha não estão disponíveis.");
+    }*/
+      logar();
     }//GEN-LAST:event_btnEntarActionPerformed
 
     /**

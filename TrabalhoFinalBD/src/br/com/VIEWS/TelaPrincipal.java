@@ -28,8 +28,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         DesktopPrincipal = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        MenuRel = new javax.swing.JMenuBar();
+        subMenuUsuarios = new javax.swing.JMenu();
         submenuUsuarios = new javax.swing.JMenuItem();
         submenuClientes = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -51,10 +51,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGap(0, 415, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Cadastrar");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+        subMenuUsuarios.setText("Cadastrar");
+        subMenuUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
+                subMenuUsuariosActionPerformed(evt);
             }
         });
 
@@ -64,7 +64,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 submenuUsuariosActionPerformed(evt);
             }
         });
-        jMenu1.add(submenuUsuarios);
+        subMenuUsuarios.add(submenuUsuarios);
 
         submenuClientes.setText("Cliente");
         submenuClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -72,20 +72,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 submenuClientesActionPerformed(evt);
             }
         });
-        jMenu1.add(submenuClientes);
+        subMenuUsuarios.add(submenuClientes);
 
-        jMenuBar1.add(jMenu1);
+        MenuRel.add(subMenuUsuarios);
 
         jMenu3.setText("Relatorio");
-        jMenuBar1.add(jMenu3);
+        MenuRel.add(jMenu3);
 
         jMenu2.setText("Ajuda");
-        jMenuBar1.add(jMenu2);
+        MenuRel.add(jMenu2);
 
         jMenu4.setText("Opções");
-        jMenuBar1.add(jMenu4);
+        MenuRel.add(jMenu4);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(MenuRel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,9 +121,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         DesktopPrincipal.add(tCliente);
     }//GEN-LAST:event_submenuClientesActionPerformed
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+    private void subMenuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuUsuariosActionPerformed
      
-    }//GEN-LAST:event_jMenu1ActionPerformed
+    }//GEN-LAST:event_subMenuUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,11 +162,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane DesktopPrincipal;
-    public static javax.swing.JMenu jMenu1;
+    public static javax.swing.JMenuBar MenuRel;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuBar jMenuBar1;
+    public static javax.swing.JMenu subMenuUsuarios;
     private javax.swing.JMenuItem submenuClientes;
     private javax.swing.JMenuItem submenuUsuarios;
     // End of variables declaration//GEN-END:variables

@@ -33,13 +33,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
 
      
     
-    public void limpar(){
-        txtIdUsuario.setText(null);
-        txtNomeUsuario.setText(null);
-        txtSenhaUsuario.setText(null);
-        txtLoginUsuario.setText(null);
-    }
-    
+   
     
     
     /**
@@ -125,6 +119,11 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
 
         btnExcluir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/IconeExcluir.png"))); // NOI18N
         btnExcluir1.setText("excluir");
+        btnExcluir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluir1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,7 +228,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
 
             objUsuarioDAO.inserirUsuario(objUsuarioDTO);
             JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
-            limpar();
+            
         }
     }
 
@@ -256,7 +255,10 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
     } else {
         // Mostra uma mensagem de erro se o usuário não for encontrado
         JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
-        limpar();  // Limpa os campos
+
+        //metodo para apagar os campos
+         UsuarioDAO objUsuarioDAO = new UsuarioDAO();       
+            objUsuarioDAO.limpar();
     }
 
     }//GEN-LAST:event_btnPesquisarActionPerformed
@@ -267,7 +269,9 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         //metodo botao limpar
-        limpar();
+          
+       UsuarioDAO objUsuarioDAO = new UsuarioDAO();       
+            objUsuarioDAO.limpar();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void txtLoginUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginUsuarioActionPerformed
@@ -292,11 +296,25 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
 
             UsuarioDAO objUsuarioDAO = new UsuarioDAO();       
             objUsuarioDAO.editar(objusuarioDTO);
-            limpar();
+        
         
     
         
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluir1ActionPerformed
+        // TODO add your handling code here:
+        
+        String idUsuario = txtIdUsuario.getText();
+        
+        UsuarioDTO objUsuarioDTO = new UsuarioDTO();
+        objUsuarioDTO.setIdUsuario(Integer.parseInt(idUsuario));
+        
+        UsuarioDAO objUsuarioDAO = new UsuarioDAO();
+        objUsuarioDAO.excluir(objUsuarioDTO);
+     
+        
+    }//GEN-LAST:event_btnExcluir1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -309,9 +327,9 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtIdUsuario;
-    private javax.swing.JTextField txtLoginUsuario;
-    private javax.swing.JTextField txtNomeUsuario;
-    private javax.swing.JPasswordField txtSenhaUsuario;
+    public static javax.swing.JTextField txtIdUsuario;
+    public static javax.swing.JTextField txtLoginUsuario;
+    public static javax.swing.JTextField txtNomeUsuario;
+    public static javax.swing.JPasswordField txtSenhaUsuario;
     // End of variables declaration//GEN-END:variables
 }

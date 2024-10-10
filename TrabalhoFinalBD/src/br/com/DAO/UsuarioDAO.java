@@ -2,6 +2,8 @@
 package br.com.DAO;
 
 import br.com.DTO.UsuarioDTO;
+import br.com.VIEWS.TelaPrincipal;
+import br.com.VIEWS.TelaUsuarios;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -12,6 +14,50 @@ public class UsuarioDAO {
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
+    
+  /* public void logar(UsuarioDTO objUsuarioDTO){
+        String sql = "select * from tb_usuarios where login = ? and senha = ?";
+        
+        try {
+            //preparar a cosulta no banco, em função do que foi inserido nas caixas de texto
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1,objUsuarioDTO.getLoginUsuario());
+            pst.setString(2, objUsuarioDTO.getSenhaUsuario());
+            
+            //executar a query
+            rs = pst.executeQuery();
+            
+            if (rs.next()){
+               String perfil = rs.getString(5);
+               
+               if (perfil.equals("admin")){
+                   TelaPrincipal principal = new TelaPrincipal();
+                   principal.setVisible(true);
+                   TelaPrincipal.MenuRel.setEnabled(true);
+                   TelaPrincipal.subMenuUsuarios.setEnabled(true);
+                   TelaPrincipal.
+               }
+               
+                       }else {
+                JOptionPane.showMessageDialog(null, "Usuario e/ou senha inválidos");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Tela de login"+ e);
+            
+        }
+   }
+    */
+   
+   
+   
+     public void limpar(){
+        TelaUsuarios.txtIdUsuario.setText(null);
+        TelaUsuarios.txtNomeUsuario.setText(null);
+        TelaUsuarios.txtSenhaUsuario.setText(null);
+        TelaUsuarios.txtLoginUsuario.setText(null);
+    }
+    
     
      //Metodo pesquisar
     public UsuarioDTO pesquisarUsuario(int idUsuario) {
@@ -35,12 +81,14 @@ public class UsuarioDAO {
 
             rs.close();
             pst.close();
+            
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao pesquisar usuário: " + e);
         }
 
         return usuarioDTO;
+       
     }
     
     //Metodo inserir/adicionar usuarios
@@ -57,6 +105,7 @@ public class UsuarioDAO {
             
             pst.execute();
             pst.close();
+             limpar();
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Inserir Usuario:" + e);
@@ -82,7 +131,8 @@ public class UsuarioDAO {
             
             rs.close();
             pst.close();
-
+            
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao verificar usuário existente: " + e);
         }
@@ -97,17 +147,17 @@ public class UsuarioDAO {
          conexao = ConexaoDAO.conector();
          try {
                pst = conexao.prepareStatement(sql);
-               pst.setInt(4, objUsarioDTO.getIdUsuario());
                pst.setString(1, objUsarioDTO.getNomeUsuario());
                pst.setString(2, objUsarioDTO.getLoginUsuario());
                pst.setString(3, objUsarioDTO.getSenhaUsuario());
-               
+                pst.setInt(4, objUsarioDTO.getIdUsuario());
+                
                int add = pst.executeUpdate();
                if (add >0){
                    JOptionPane.showMessageDialog(null, "Usuário editado com sucesso!");
                     //pesquisaAuto();
                     conexao.close();
-                    //limparCampos();
+                    limpar();
                }
                
             
@@ -115,6 +165,29 @@ public class UsuarioDAO {
         JOptionPane.showMessageDialog(null," Método editar " + e);
         
         }
+    }
+    
+    //Metodo Excluir
+    public void excluir (UsuarioDTO objUsuarioDTO){
+        String sql = "delete from tb_usuarios where id_usuario = ?";
+        conexao = ConexaoDAO.conector();
+        
+        try {
+              pst = conexao.prepareStatement(sql);
+              pst.setInt(1, objUsuarioDTO.getIdUsuario());
+            
+                    int add = pst.executeUpdate();
+                    if (add >0){
+                    JOptionPane.showMessageDialog(null, "Usuário excluido com sucesso!");
+                    //pesquisaAuto();
+                    conexao.close();
+                   limpar();
+               }
+              
+                      } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Método apagar" +e);
+        }
+        
     }
     
     
