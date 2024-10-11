@@ -55,7 +55,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnLimpar = new javax.swing.JButton();
-        txtLoginUsuario = new javax.swing.JTextField();
+        txtEmailUsuario = new javax.swing.JTextField();
         txtSenhaUsuario = new javax.swing.JPasswordField();
         btnExcluir1 = new javax.swing.JButton();
 
@@ -98,7 +98,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         jLabel2.setText("Nome:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("Login:");
+        jLabel3.setText("Email:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Senha:");
@@ -111,9 +111,9 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
-        txtLoginUsuario.addActionListener(new java.awt.event.ActionListener() {
+        txtEmailUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLoginUsuarioActionPerformed(evt);
+                txtEmailUsuarioActionPerformed(evt);
             }
         });
 
@@ -148,7 +148,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel2))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtLoginUsuario, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtEmailUsuario, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNomeUsuario, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
@@ -177,7 +177,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(txtNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtLoginUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(txtEmailUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -202,14 +202,14 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         
         
     // Verifique se qualquer um dos campos obrigatórios está vazio
-    if (txtIdUsuario.getText().trim().isEmpty() || txtLoginUsuario.getText().trim().isEmpty()) {
+    if (txtIdUsuario.getText().trim().isEmpty() || txtEmailUsuario.getText().trim().isEmpty()) {
         // Exibe mensagem de erro se qualquer um dos campos estiver vazio
         JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
     } else {
         // Captura de dados na tela Usuario
         int id_Usuario = Integer.parseInt(txtIdUsuario.getText());
         String nome_Usuario = txtNomeUsuario.getText();
-        String login_Usuario = txtLoginUsuario.getText();
+        String login_Usuario = txtEmailUsuario.getText();
         String senha_Usuario = txtSenhaUsuario.getText();
         
         
@@ -250,7 +250,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
     if (usuarioDTO != null) {
         // Preenche os campos com os dados do usuário encontrado
         txtNomeUsuario.setText(usuarioDTO.getNomeUsuario());
-        txtLoginUsuario.setText(usuarioDTO.getLoginUsuario());
+        txtEmailUsuario.setText(usuarioDTO.getLoginUsuario());
         txtSenhaUsuario.setText(usuarioDTO.getSenhaUsuario());
     } else {
         // Mostra uma mensagem de erro se o usuário não for encontrado
@@ -274,9 +274,9 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
             objUsuarioDAO.limpar();
     }//GEN-LAST:event_btnLimparActionPerformed
 
-    private void txtLoginUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginUsuarioActionPerformed
+    private void txtEmailUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtLoginUsuarioActionPerformed
+    }//GEN-LAST:event_txtEmailUsuarioActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
@@ -284,7 +284,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
        //Botao editar(msm codigo btn inlcuir)
         int id_usuario = Integer.parseInt(txtIdUsuario.getText());
         String nome_usuario = txtNomeUsuario.getText();
-        String login_usuario = txtLoginUsuario.getText();
+        String login_usuario = txtEmailUsuario.getText();
         String senha_usuario = txtSenhaUsuario.getText();
 
 
@@ -327,8 +327,8 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    public static javax.swing.JTextField txtEmailUsuario;
     public static javax.swing.JTextField txtIdUsuario;
-    public static javax.swing.JTextField txtLoginUsuario;
     public static javax.swing.JTextField txtNomeUsuario;
     public static javax.swing.JPasswordField txtSenhaUsuario;
     // End of variables declaration//GEN-END:variables

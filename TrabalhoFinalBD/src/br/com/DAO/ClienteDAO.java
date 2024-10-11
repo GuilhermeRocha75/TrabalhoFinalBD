@@ -1,7 +1,9 @@
 
 package br.com.DAO;
 
+import br.com.DTO.ClienteDTO;
 import br.com.DTO.UsuarioDTO;
+import br.com.VIEWS.TelaCliente;
 import br.com.VIEWS.TelaPrincipal;
 import br.com.VIEWS.TelaUsuarios;
 import java.awt.Color;
@@ -9,7 +11,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 
-public class UsuarioDAO {
+public class ClienteDAO {
    
     
     Connection conexao = null;
@@ -18,7 +20,7 @@ public class UsuarioDAO {
     
     // Método para verificar login
     public boolean logar(String login, String senha) {
-        String sql = "SELECT * FROM tb_usuarios WHERE login = ? AND senha = ?";
+        String sql = "SELECT * FROM tb_clientes WHERE login = ? AND senha = ?";
         conexao = new ConexaoDAO().conector(); // Conecta ao banco de dados
 
         try {
@@ -44,17 +46,18 @@ public class UsuarioDAO {
    
    
    
-     public void limpar(){
-        TelaUsuarios.txtIdUsuario.setText(null);
-        TelaUsuarios.txtNomeUsuario.setText(null);
-        TelaUsuarios.txtSenhaUsuario.setText(null);
-        TelaUsuarios.txtEmailUsuario.setText(null);
-    }
+public void limpar() {
+    TelaCliente.txtIdUsuario.setText(null);
+    TelaCliente.txtNomeUsuario.setText(null);
+    TelaCliente.txtTelefone.setText(null);
+    TelaCliente.txtEndereco.setText(null);
+}
+
     
     
      //Metodo pesquisar
     public UsuarioDTO pesquisarUsuario(int idUsuario) {
-        String sql = "SELECT * FROM tb_usuarios WHERE id_usuario = ?";
+        String sql = "SELECT * FROM tb_clientes WHERE id_usuario = ?";
         conexao = new ConexaoDAO().conector();
         UsuarioDTO usuarioDTO = null;
 
@@ -85,16 +88,16 @@ public class UsuarioDAO {
     }
     
     //Metodo inserir/adicionar usuarios
-    public void inserirUsuario(UsuarioDTO objUsuarioDTO){
-        String sql = "insert into tb_usuarios(id_usuario, usuario, login, senha) values(?, ?, ?, ?)";
+    public void inserirUsuario(ClienteDTO objClienteDTO){
+        String sql = "insert into tb_clientes(id_usuario, usuario, login, senha) values(?, ?, ?, ?)";
         conexao = new ConexaoDAO().conector();
         
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setInt(1, objUsuarioDTO.getIdUsuario());
-            pst.setString(2, objUsuarioDTO.getNomeUsuario());
-            pst.setString(3, objUsuarioDTO.getLoginUsuario());
-            pst.setString(4, objUsuarioDTO.getSenhaUsuario());
+            pst.setInt(1,objClienteDTO.getIdUsuario());
+            pst.setString(2,objClienteDTO.getNomeUsuario());
+            pst.setString(3, objClienteDTO.getLoginUsuario());
+            pst.setString(4, objClienteDTO.getSenhaUsuario());
             
             pst.execute();
             pst.close();
@@ -107,7 +110,7 @@ public class UsuarioDAO {
     }   
       //Metodo para virificar se usuario ou id ja existem
     public boolean verificarUsuarioExistente(int idUsuario, String loginUsuario) {
-        String sql = "SELECT * FROM tb_usuarios WHERE id_usuario = ? OR login = ?";
+        String sql = "SELECT * FROM tb_clientes WHERE id_usuario = ? OR login = ?";
         conexao = new ConexaoDAO().conector();
         boolean existe = false;
 
@@ -134,54 +137,54 @@ public class UsuarioDAO {
     }
     
     
-    //Metodo editar
-    public void editar(UsuarioDTO objUsarioDTO){
-        String sql = "update tb_usuarios set usuario = ?, login = ?, senha = ? where id_usuario = ?";
-         conexao = ConexaoDAO.conector();
-         try {
-               pst = conexao.prepareStatement(sql);
-               pst.setString(1, objUsarioDTO.getNomeUsuario());
-               pst.setString(2, objUsarioDTO.getLoginUsuario());
-               pst.setString(3, objUsarioDTO.getSenhaUsuario());
-                pst.setInt(4, objUsarioDTO.getIdUsuario());
-                
-               int add = pst.executeUpdate();
-               if (add >0){
-                   JOptionPane.showMessageDialog(null, "Usuário editado com sucesso!");
-                    //pesquisaAuto();
-                    conexao.close();
-                    limpar();
-               }
-               
-            
-        } catch (Exception e) {
-        JOptionPane.showMessageDialog(null," Método editar " + e);
+    // Método editar
+public void editar(ClienteDTO objClienteDTO) {
+    String sql = "UPDATE tb_clientes SET usuario = ?, login = ?, senha = ? WHERE id_usuario = ?";
+    conexao = ConexaoDAO.conector();
+    try {
+        pst = conexao.prepareStatement(sql);
+        pst.setString(1, objClienteDTO.getNomeUsuario());
+        pst.setString(2, objClienteDTO.getLoginUsuario());
+        pst.setString(3, objClienteDTO.getSenhaUsuario());
+        pst.setInt(4, objClienteDTO.getIdUsuario());
         
+        int add = pst.executeUpdate();
+        if (add > 0) {
+            JOptionPane.showMessageDialog(null, "Cliente editado com sucesso!");
+            // pesquisaAuto(); // Se essa função for necessária, mantenha-a
+            conexao.close();
+            limpar(); // Limpa os campos
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Método editar: " + e);
     }
+}
+
     
-    //Metodo Excluir
-    public void excluir (UsuarioDTO objUsuarioDTO){
-        String sql = "delete from tb_usuarios where id_usuario = ?";
-        conexao = ConexaoDAO.conector();
+  // Método Excluir
+public void excluir(ClienteDTO objClienteDTO) {
+    String sql = "delete from tb_clientes where id_usuario = ?";
+    conexao = ConexaoDAO.conector();
+    
+    try {
+        pst = conexao.prepareStatement(sql);
+        pst.setInt(1, objClienteDTO.getIdUsuario());
         
-        try {
-              pst = conexao.prepareStatement(sql);
-              pst.setInt(1, objUsuarioDTO.getIdUsuario());
-            
-                    int add = pst.executeUpdate();
-                    if (add >0){
-                    JOptionPane.showMessageDialog(null, "Usuário excluido com sucesso!");
-                    //pesquisaAuto();
-                    conexao.close();
-                   limpar();
-               }
-              
-                      } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Método apagar" +e);
+        int add = pst.executeUpdate();
+        if (add > 0) {
+            JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!");
+            // pesquisaAuto();
+            conexao.close();
+            limpar();
         }
         
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Método excluir: " + e);
     }
+}
+
+
+    
     
     
     

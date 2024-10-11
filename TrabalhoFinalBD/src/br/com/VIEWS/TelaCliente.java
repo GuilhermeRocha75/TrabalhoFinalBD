@@ -5,11 +5,19 @@
  */
 package br.com.VIEWS;
 
+import br.com.DAO.ClienteDAO;
 import br.com.DAO.ConexaoDAO;
+import br.com.DAO.UsuarioDAO;
+import br.com.DTO.ClienteDTO;
+import br.com.DTO.UsuarioDTO;
+import static br.com.VIEWS.TelaUsuarios.txtIdUsuario;
+import static br.com.VIEWS.TelaUsuarios.txtNomeUsuario;
+import static br.com.VIEWS.TelaUsuarios.txtSenhaUsuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import static br.com.VIEWS.TelaUsuarios.txtEmailUsuario;
 
 /**
  *
@@ -41,8 +49,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             
             if (rs.next()) { 
                 txtNomeUsuario.setText(rs.getString(2));
-                txtLoginUsuario.setText(rs.getString(3));
-                txtSenhaUsuario.setText(rs.getString(4));
+                txtEndereco.setText(rs.getString(3));
+                txtTelefone.setText(rs.getString(4));
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
                 limpar();
@@ -56,8 +64,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     public void limpar(){
         txtIdUsuario.setText(null);
         txtNomeUsuario.setText(null);
-        txtSenhaUsuario.setText(null);
-        txtLoginUsuario.setText(null);
+        txtTelefone.setText(null);
+        txtEndereco.setText(null);
     }
     
     
@@ -78,10 +86,15 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         txtIdUsuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtNomeUsuario = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtLoginUsuario = new javax.swing.JTextField();
-        txtSenhaUsuario = new javax.swing.JTextField();
+        lblEndereco = new javax.swing.JLabel();
+        lblTelefone = new javax.swing.JLabel();
+        txtEndereco = new javax.swing.JTextField();
+        txtTelefone = new javax.swing.JTextField();
+        btnEditar = new javax.swing.JButton();
+        lblEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        lblCpf = new javax.swing.JLabel();
+        txtCpf = new javax.swing.JTextField();
 
         setClosable(true);
 
@@ -106,6 +119,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/iconeExcluir.png"))); // NOI18N
         btnExcluir.setText("excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/iconePesquisar.png"))); // NOI18N
         btnPesquisar.setText("Pesquisar");
@@ -124,15 +142,35 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Nome:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("Login:");
+        lblEndereco.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblEndereco.setText("Endereço:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Senha:");
+        lblTelefone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblTelefone.setText("Telefone:");
 
-        txtLoginUsuario.addActionListener(new java.awt.event.ActionListener() {
+        txtEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLoginUsuarioActionPerformed(evt);
+                txtEnderecoActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/iconeEditar.png"))); // NOI18N
+        btnEditar.setText("editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        lblEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblEmail.setText("Email:");
+
+        lblCpf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblCpf.setText("CPF/CNPJ:");
+
+        txtCpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCpfActionPerformed(evt);
             }
         });
 
@@ -143,102 +181,232 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtLoginUsuario)
-                                    .addComponent(txtNomeUsuario)
-                                    .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
+                                .addGap(73, 73, 73)
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lblCpf)
+                                            .addComponent(lblEmail))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtCpf)
+                                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lblEndereco)
+                                            .addComponent(lblTelefone)
+                                            .addComponent(jLabel2))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtEndereco)
+                                            .addComponent(txtNomeUsuario)
+                                            .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnExcluir)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 92, Short.MAX_VALUE)
+                                .addComponent(btnEditar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluir)
+                                .addGap(67, 67, 67))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnPesquisar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnLimpar)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnIncluir)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnLimpar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnIncluir)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIdUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                    .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtLoginUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
+                    .addComponent(txtEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(lblEndereco))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTelefone))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEmail))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(lblCpf))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(156, 156, 156))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        //metodo botao limpar
-        limpar();
+          //metodo botao limpar
+          
+      ClienteDAO objClienteDAO = new ClienteDAO();       
+            objClienteDAO.limpar();
+
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         // TODO add your handling code here:
+     // Verifique se qualquer um dos campos obrigatórios está vazio
+if (txtIdUsuario.getText().trim().isEmpty() || txtEndereco.getText().trim().isEmpty()) {
+    // Exibe mensagem de erro se qualquer um dos campos estiver vazio
+    JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+} else {
+    // Captura de dados na tela Usuario
+    int id_Usuario = Integer.parseInt(txtIdUsuario.getText());
+    String nome_Usuario = txtNomeUsuario.getText();
+    String login_Usuario = txtEndereco.getText();
+    String senha_Usuario = txtTelefone.getText();
+    
+    ClienteDAO objClienteDAO = new ClienteDAO();
+
+    // Verifica se o id ou login já existem
+    if (objClienteDAO.verificarUsuarioExistente(id_Usuario, login_Usuario)) {
+        JOptionPane.showMessageDialog(null, "O ID ou login já estão cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+    } else {
+        // Se não existir, insere o novo cliente
+        ClienteDTO objClienteDTO = new ClienteDTO();
+        objClienteDTO.setIdUsuario(id_Usuario);
+        objClienteDTO.setNomeUsuario(nome_Usuario);
+        objClienteDTO.setLoginUsuario(login_Usuario);
+        objClienteDTO.setSenhaUsuario(senha_Usuario);
+
+        objClienteDAO.inserirUsuario(objClienteDTO);
+        JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+    }
+}
+
+
+        
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        // Chamada do metodo Pesquisar
-        pesquisar();
+     // Chamada do método Pesquisar
+
+// Obtém o ID do campo de texto
+int idCliente = Integer.parseInt(txtIdUsuario.getText());
+
+// Cria uma instância do DAO
+ClienteDAO clienteDAO = new ClienteDAO();
+
+// Chama o método pesquisar e obtém o resultado
+
+    UsuarioDTO clienteDTO = clienteDAO.pesquisarUsuario(idCliente);
+
+if (clienteDTO != null) {
+    // Preenche os campos com os dados do cliente encontrado
+    txtNomeUsuario.setText(clienteDTO.getNomeUsuario());
+    txtEndereco.setText(clienteDTO.getLoginUsuario());
+    txtTelefone.setText(clienteDTO.getSenhaUsuario());
+} else {
+    // Mostra uma mensagem de erro se o cliente não for encontrado
+    JOptionPane.showMessageDialog(null, "Cliente não cadastrado!");
+
+    // Método para apagar os campos
+    ClienteDAO objClienteDAO = new ClienteDAO();       
+    objClienteDAO.limpar();
+}
+
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void txtIdUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdUsuarioActionPerformed
 
-    private void txtLoginUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginUsuarioActionPerformed
+    private void txtEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnderecoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtLoginUsuarioActionPerformed
+    }//GEN-LAST:event_txtEnderecoActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+// TODO add your handling code here:
+String idCliente = txtIdUsuario.getText();
+
+if (idCliente.trim().isEmpty()) {
+    JOptionPane.showMessageDialog(null, "O campo ID não pode estar vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
+} else {
+    ClienteDTO objClienteDTO = new ClienteDTO();
+    objClienteDTO.setIdUsuario(Integer.parseInt(idCliente));
+    
+    ClienteDAO objClienteDAO = new ClienteDAO();
+    objClienteDAO.excluir(objClienteDTO);
+    
+    JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!");
+}
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+// Botão editar (mesmo código do botão incluir)
+int id_usuario = Integer.parseInt(txtIdUsuario.getText());
+String nome_usuario = txtNomeUsuario.getText();
+String login_usuario = txtEndereco.getText();
+String senha_usuario = txtTelefone.getText();
+
+ClienteDTO objClienteDTO = new ClienteDTO();
+objClienteDTO.setIdUsuario(id_usuario);
+objClienteDTO.setNomeUsuario(nome_usuario);
+objClienteDTO.setLoginUsuario(login_usuario);
+objClienteDTO.setSenhaUsuario(senha_usuario);
+
+ClienteDAO objClienteDAO = new ClienteDAO();
+objClienteDAO.editar(objClienteDTO);
+
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCpfActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtIdUsuario;
-    private javax.swing.JTextField txtLoginUsuario;
-    private javax.swing.JTextField txtNomeUsuario;
-    private javax.swing.JTextField txtSenhaUsuario;
+    private javax.swing.JLabel lblCpf;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblEndereco;
+    private javax.swing.JLabel lblTelefone;
+    public static javax.swing.JTextField txtCpf;
+    public static javax.swing.JTextField txtEmail;
+    public static javax.swing.JTextField txtEndereco;
+    public static javax.swing.JTextField txtIdUsuario;
+    public static javax.swing.JTextField txtNomeUsuario;
+    public static javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }
