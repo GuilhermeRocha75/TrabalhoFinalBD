@@ -28,6 +28,7 @@
 
 ```sql
 
+
 create database trabalhofinalbd;
 use trabalhofinalbd;
 
@@ -41,5 +42,24 @@ senha varchar(15)not null
 insert into tb_usuarios(id_usuario, usuario, login, senha)
 values(0, 'administrador', 'admin', 'admin');
 
+-- ALterar dados
+update tb_usuarios set usuario = '?', login = '?', senha = '?' where id_usuario = '?';
+
 select * from tb_usuarios;
+
+-- TABELA CLIENTES
+
+create table tb_clientes(
+id_usuario int primary key,
+nome varchar(50) not null,
+endereço varchar(50) not null,
+telefone varchar(11) not null,
+email varchar(50) not null,
+CPF_CNPJ varchar(15)not null
+);
+
+insert into tb_clientes(id_usuario, nome, endereço, telefone, email, CPF_CNPJ)
+values(0, 'administrador', 'admin', '0011112222', 'admin@gmail.com','00000000000');
+
+select * from tb_clientes;
 ```
