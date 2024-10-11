@@ -25,32 +25,7 @@ public class TelaLogin extends javax.swing.JFrame {
    PreparedStatement pst = null;
    ResultSet rs = null;
    
-   public void logar(){
-        String sql = "select * from tb_usuarios where login = ? and senha = ?";
-        
-        try {
-            //preparar a cosulta no banco, em função do que foi inserido nas caixas de texto
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtUsuario.getText());
-            pst.setString(2, txtSenha.getText());
-            
-            //executar a query
-            rs = pst.executeQuery();
-            
-            if (rs.next()){
-                TelaPrincipal principal = new TelaPrincipal();
-                principal.setVisible(true);// mudamos a visualização
-                dispose();
-                       }else {
-                JOptionPane.showMessageDialog(null, "Usuario e/ou senha inválidos");
-            }
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Tela de login"+ e);
-            
-        }
-        
-    }
+  
     
     public TelaLogin() {
         initComponents();
@@ -197,23 +172,44 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSenhaActionPerformed
 
     private void btnEntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntarActionPerformed
-      /*
-         // Criar uma instância de UsuarioDTO
-    UsuarioDTO objUsuarioDTO = new UsuarioDTO();
+    
+        // Conectando ao banco de dados
+    Connection conexao = ConexaoDAO.conector();
+    PreparedStatement pst = null;
+    ResultSet rs = null;
 
-    // Verifica se os campos de texto não estão nulos
-    if (TelaUsuarios.txtLoginUsuario != null && TelaUsuarios.txtSenhaUsuario != null) {
-        // Preencher os dados do objeto com os valores dos campos de texto
-        objUsuarioDTO.setLoginUsuario(TelaUsuarios.txtLoginUsuario.getText());
-        objUsuarioDTO.setSenhaUsuario(new String(TelaUsuarios.txtSenhaUsuario.getPassword())); // Se for um campo de senha
-
-        // Chamar o método logar
-        UsuarioDAO objUsuarioDAO = new UsuarioDAO();
-        objUsuarioDAO.logar(objUsuarioDTO);
-    } else {
-        JOptionPane.showMessageDialog(null, "Os campos de login ou senha não estão disponíveis.");
-    }*/
-      logar();
+    String sql = "select * from tb_usuarios where login = ? and senha = ?";
+    
+    try {
+        // Preparando a consulta
+        pst = conexao.prepareStatement(sql);
+        pst.setString(1, txtUsuario.getText());
+        pst.setString(2, txtSenha.getText());
+        
+        // Executando a query
+        rs = pst.executeQuery();
+        
+        if (rs.next()) {
+            // Login bem-sucedido, abrindo a tela principal
+            TelaPrincipal principal = new TelaPrincipal();
+            principal.setVisible(true);
+            dispose(); // Fechando a tela de login
+        } else {
+            // Se as credenciais estiverem incorretas
+            JOptionPane.showMessageDialog(null, "Usuário e/ou senha inválidos");
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Erro ao logar: " + e);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pst != null) pst.close();
+            if (conexao != null) conexao.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao fechar recursos: " + e);
+        }
+    }
     }//GEN-LAST:event_btnEntarActionPerformed
 
     /**

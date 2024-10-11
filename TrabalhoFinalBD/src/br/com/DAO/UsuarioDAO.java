@@ -4,6 +4,7 @@ package br.com.DAO;
 import br.com.DTO.UsuarioDTO;
 import br.com.VIEWS.TelaPrincipal;
 import br.com.VIEWS.TelaUsuarios;
+import java.awt.Color;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -15,39 +16,31 @@ public class UsuarioDAO {
     PreparedStatement pst = null;
     ResultSet rs = null;
     
-  /* public void logar(UsuarioDTO objUsuarioDTO){
-        String sql = "select * from tb_usuarios where login = ? and senha = ?";
-        
+    // Método para verificar login
+    public boolean logar(String login, String senha) {
+        String sql = "SELECT * FROM tb_usuarios WHERE login = ? AND senha = ?";
+        conexao = new ConexaoDAO().conector(); // Conecta ao banco de dados
+
         try {
-            //preparar a cosulta no banco, em função do que foi inserido nas caixas de texto
             pst = conexao.prepareStatement(sql);
-            pst.setString(1,objUsuarioDTO.getLoginUsuario());
-            pst.setString(2, objUsuarioDTO.getSenhaUsuario());
-            
-            //executar a query
+            pst.setString(1, login);
+            pst.setString(2, senha);
+
             rs = pst.executeQuery();
-            
-            if (rs.next()){
-               String perfil = rs.getString(5);
-               
-               if (perfil.equals("admin")){
-                   TelaPrincipal principal = new TelaPrincipal();
-                   principal.setVisible(true);
-                   TelaPrincipal.MenuRel.setEnabled(true);
-                   TelaPrincipal.subMenuUsuarios.setEnabled(true);
-                   TelaPrincipal.
-               }
-               
-                       }else {
-                JOptionPane.showMessageDialog(null, "Usuario e/ou senha inválidos");
+
+            if (rs.next()) {
+                // Login e senha corretos
+                return true;
             }
-            
+
+            rs.close();
+            pst.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Tela de login"+ e);
-            
+            JOptionPane.showMessageDialog(null, "Erro no login: " + e);
         }
-   }
-    */
+
+        return false; // Login ou senha inválidos
+    }
    
    
    
