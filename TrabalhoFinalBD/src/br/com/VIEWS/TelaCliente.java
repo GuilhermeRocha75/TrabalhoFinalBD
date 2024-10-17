@@ -11,13 +11,13 @@ import br.com.DAO.UsuarioDAO;
 import br.com.DTO.ClienteDTO;
 import br.com.DTO.UsuarioDTO;
 import static br.com.VIEWS.TelaUsuarios.txtIdUsuario;
-import static br.com.VIEWS.TelaUsuarios.txtNomeUsuario;
 import static br.com.VIEWS.TelaUsuarios.txtSenhaUsuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import static br.com.VIEWS.TelaUsuarios.txtEmailUsuario;
+import static br.com.VIEWS.TelaUsuarios.txtUsuario;
 
 /**
  *
@@ -40,7 +40,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
      public void pesquisar(){
         //Metodo pesquisar
-        String sql = "select * from tb_usuarios where id_usuario = ?";
+        String sql = "select * from tb_clientes where id_usuario = ?";
         try {
             
             pst = conexao.prepareStatement(sql);
@@ -51,8 +51,10 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 txtNomeUsuario.setText(rs.getString(2));
                 txtEndereco.setText(rs.getString(3));
                 txtTelefone.setText(rs.getString(4));
+                txtEmail.setText(rs.getString(5));
+                txtCpf.setText(rs.getString(6));
             } else {
-                JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
+                JOptionPane.showMessageDialog(null, "Cliente não cadastrado!");
                 limpar();
             }
             
@@ -66,6 +68,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         txtNomeUsuario.setText(null);
         txtTelefone.setText(null);
         txtEndereco.setText(null);
+        txtEmail.setText(null);
+        txtCpf.setText(null);
     }
     
     
@@ -278,28 +282,33 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         // TODO add your handling code here:
      // Verifique se qualquer um dos campos obrigatórios está vazio
-if (txtIdUsuario.getText().trim().isEmpty() || txtEndereco.getText().trim().isEmpty()) {
+if (txtIdUsuario.getText().trim().isEmpty() || txtEndereco.getText().trim().isEmpty() || txtNomeUsuario.getText().trim().isEmpty() || txtTelefone.getText().trim().isEmpty() || txtEmail.getText().trim().isEmpty() || txtCpf.getText().trim().isEmpty()) {
     // Exibe mensagem de erro se qualquer um dos campos estiver vazio
     JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
 } else {
     // Captura de dados na tela Usuario
     int id_Usuario = Integer.parseInt(txtIdUsuario.getText());
-    String nome_Usuario = txtNomeUsuario.getText();
-    String login_Usuario = txtEndereco.getText();
-    String senha_Usuario = txtTelefone.getText();
+    String nome_cliente = txtNomeUsuario.getText();
+    String endereco_cliente = txtEndereco.getText();
+    String telefone_cliente = txtTelefone.getText();
+    String email_cliente = txtEmail.getText();
+    String cpf_cliente = txtCpf.getText();
     
     ClienteDAO objClienteDAO = new ClienteDAO();
 
     // Verifica se o id ou login já existem
-    if (objClienteDAO.verificarUsuarioExistente(id_Usuario, login_Usuario)) {
-        JOptionPane.showMessageDialog(null, "O ID ou login já estão cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+    if (objClienteDAO.verificarUsuarioExistente(id_Usuario, cpf_cliente)) {
+        JOptionPane.showMessageDialog(null, "O ID ou CPF/CNPJ já estão cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
     } else {
         // Se não existir, insere o novo cliente
         ClienteDTO objClienteDTO = new ClienteDTO();
-        objClienteDTO.setIdUsuario(id_Usuario);
-        objClienteDTO.setNomeUsuario(nome_Usuario);
-        objClienteDTO.setLoginUsuario(login_Usuario);
-        objClienteDTO.setSenhaUsuario(senha_Usuario);
+        objClienteDTO.setIdCliente(id_Usuario);
+        objClienteDTO.setNomeCliente(nome_cliente);
+        objClienteDTO.setEnderecoCliente(endereco_cliente);
+        objClienteDTO.setTelefone(telefone_cliente);
+        objClienteDTO.setEmail(email_cliente);
+        objClienteDTO.setCpf(cpf_cliente);
+        
 
         objClienteDAO.inserirUsuario(objClienteDTO);
         JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
@@ -321,13 +330,15 @@ ClienteDAO clienteDAO = new ClienteDAO();
 
 // Chama o método pesquisar e obtém o resultado
 
-    UsuarioDTO clienteDTO = clienteDAO.pesquisarUsuario(idCliente);
+    ClienteDTO clienteDTO = clienteDAO.pesquisarUsuario(idCliente);
 
 if (clienteDTO != null) {
     // Preenche os campos com os dados do cliente encontrado
-    txtNomeUsuario.setText(clienteDTO.getNomeUsuario());
-    txtEndereco.setText(clienteDTO.getLoginUsuario());
-    txtTelefone.setText(clienteDTO.getSenhaUsuario());
+    txtNomeUsuario.setText(clienteDTO.getNomeCliente());
+    txtEndereco.setText(clienteDTO.getEnderecoCliente());
+    txtTelefone.setText(clienteDTO.getTelefone());
+    txtEmail.setText(clienteDTO.getEmail());
+    txtCpf.setText(clienteDTO.getCpf());
 } else {
     // Mostra uma mensagem de erro se o cliente não for encontrado
     JOptionPane.showMessageDialog(null, "Cliente não cadastrado!");
@@ -355,7 +366,7 @@ if (idCliente.trim().isEmpty()) {
     JOptionPane.showMessageDialog(null, "O campo ID não pode estar vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
 } else {
     ClienteDTO objClienteDTO = new ClienteDTO();
-    objClienteDTO.setIdUsuario(Integer.parseInt(idCliente));
+    objClienteDTO.setIdCliente(Integer.parseInt(idCliente));
     
     ClienteDAO objClienteDAO = new ClienteDAO();
     objClienteDAO.excluir(objClienteDTO);
@@ -367,17 +378,22 @@ if (idCliente.trim().isEmpty()) {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
+        
 // Botão editar (mesmo código do botão incluir)
-int id_usuario = Integer.parseInt(txtIdUsuario.getText());
-String nome_usuario = txtNomeUsuario.getText();
-String login_usuario = txtEndereco.getText();
-String senha_usuario = txtTelefone.getText();
+int id_cliente = Integer.parseInt(txtIdUsuario.getText());
+String nome_cliente = txtNomeUsuario.getText();
+String endereco_cliente = txtEndereco.getText();
+String telefone_cliente = txtTelefone.getText();
+String email_cliente = txtEmail.getText();
+String cpf_cliente = txtCpf.getText();
 
 ClienteDTO objClienteDTO = new ClienteDTO();
-objClienteDTO.setIdUsuario(id_usuario);
-objClienteDTO.setNomeUsuario(nome_usuario);
-objClienteDTO.setLoginUsuario(login_usuario);
-objClienteDTO.setSenhaUsuario(senha_usuario);
+objClienteDTO.setIdCliente(id_cliente);
+objClienteDTO.setNomeCliente(nome_cliente);
+objClienteDTO.setEnderecoCliente(endereco_cliente);
+objClienteDTO.setTelefone(telefone_cliente);
+objClienteDTO.setEmail(email_cliente);
+objClienteDTO.setCpf(cpf_cliente);
 
 ClienteDAO objClienteDAO = new ClienteDAO();
 objClienteDAO.editar(objClienteDTO);

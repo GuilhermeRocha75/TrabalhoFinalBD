@@ -51,13 +51,15 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         btnPesquisar = new javax.swing.JButton();
         txtIdUsuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtNomeUsuario = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnLimpar = new javax.swing.JButton();
         txtEmailUsuario = new javax.swing.JTextField();
         txtSenhaUsuario = new javax.swing.JPasswordField();
         btnExcluir1 = new javax.swing.JButton();
+        txtNome = new javax.swing.JTextField();
+        lblUsuario = new javax.swing.JLabel();
 
         setClosable(true);
 
@@ -125,6 +127,15 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
+
+        lblUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblUsuario.setText("Usuário:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,51 +150,61 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnIncluir))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                        .addGap(86, 86, 86)
+                        .addComponent(btnEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnExcluir1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4))
+                                        .addGap(18, 18, 18))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(12, 12, 12))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblUsuario)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtEmailUsuario, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNomeUsuario, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(btnEditar)
-                        .addGap(36, 36, 36)
-                        .addComponent(btnExcluir1)
-                        .addGap(67, 67, 67)))
+                                    .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIdUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1)
+                    .addComponent(txtIdUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUsuario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmailUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                .addGap(37, 37, 37)
+                    .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -202,28 +223,30 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         
         
     // Verifique se qualquer um dos campos obrigatórios está vazio
-    if (txtIdUsuario.getText().trim().isEmpty() || txtEmailUsuario.getText().trim().isEmpty()) {
+    if (txtIdUsuario.getText().trim().isEmpty() || txtNome.getText().trim().isEmpty()|| txtUsuario.getText().trim().isEmpty() || txtEmailUsuario.getText().trim().isEmpty() || txtSenhaUsuario.getText().trim().isEmpty()) {
         // Exibe mensagem de erro se qualquer um dos campos estiver vazio
         JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
     } else {
         // Captura de dados na tela Usuario
         int id_Usuario = Integer.parseInt(txtIdUsuario.getText());
-        String nome_Usuario = txtNomeUsuario.getText();
-        String login_Usuario = txtEmailUsuario.getText();
+        String nome_Usuario = txtNome.getText();
+        String usuario_Usuario = txtUsuario.getText();
+        String email_Usuario = txtEmailUsuario.getText();
         String senha_Usuario = txtSenhaUsuario.getText();
         
         
         UsuarioDAO objUsuarioDAO = new UsuarioDAO();
 
         // Verifica se o id ou login já existem
-        if (objUsuarioDAO.verificarUsuarioExistente(id_Usuario, login_Usuario)) {
-            JOptionPane.showMessageDialog(null, "O ID ou login já estão cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+        if (objUsuarioDAO.verificarUsuarioExistente(id_Usuario, usuario_Usuario)) {
+            JOptionPane.showMessageDialog(null, "O ID ou Usuario já estão cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
             // Se não existir, insere o novo usuário
             UsuarioDTO objUsuarioDTO = new UsuarioDTO();
             objUsuarioDTO.setIdUsuario(id_Usuario);
             objUsuarioDTO.setNomeUsuario(nome_Usuario);
-            objUsuarioDTO.setLoginUsuario(login_Usuario);
+            objUsuarioDTO.setUsuarioUsuario(usuario_Usuario);
+            objUsuarioDTO.setEmailUsuario(email_Usuario);
             objUsuarioDTO.setSenhaUsuario(senha_Usuario);
 
             objUsuarioDAO.inserirUsuario(objUsuarioDTO);
@@ -234,34 +257,6 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
 
         
     }//GEN-LAST:event_btnIncluirActionPerformed
-
-    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        // Chamada do metodo Pesquisar
-        
-        // Obtém o ID do campo de texto
-    int idUsuario = Integer.parseInt(txtIdUsuario.getText());
-
-    // Cria uma instância do DAO
-    UsuarioDAO usuarioDAO = new UsuarioDAO();
-
-    // Chama o método pesquisar e obtém o resultado
-    UsuarioDTO usuarioDTO = usuarioDAO.pesquisarUsuario(idUsuario);
-
-    if (usuarioDTO != null) {
-        // Preenche os campos com os dados do usuário encontrado
-        txtNomeUsuario.setText(usuarioDTO.getNomeUsuario());
-        txtEmailUsuario.setText(usuarioDTO.getLoginUsuario());
-        txtSenhaUsuario.setText(usuarioDTO.getSenhaUsuario());
-    } else {
-        // Mostra uma mensagem de erro se o usuário não for encontrado
-        JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
-
-        //metodo para apagar os campos
-         UsuarioDAO objUsuarioDAO = new UsuarioDAO();       
-            objUsuarioDAO.limpar();
-    }
-
-    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void txtIdUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdUsuarioActionPerformed
         // TODO add your handling code here:
@@ -283,15 +278,17 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         
        //Botao editar(msm codigo btn inlcuir)
         int id_usuario = Integer.parseInt(txtIdUsuario.getText());
-        String nome_usuario = txtNomeUsuario.getText();
-        String login_usuario = txtEmailUsuario.getText();
+        String nome_usuario = txtNome.getText();
+        String usuario_usuario = txtUsuario.getText();
+        String email_usuario = txtEmailUsuario.getText();
         String senha_usuario = txtSenhaUsuario.getText();
 
 
         UsuarioDTO objusuarioDTO = new UsuarioDTO();
         objusuarioDTO.setIdUsuario (id_usuario);
         objusuarioDTO.setNomeUsuario (nome_usuario);
-        objusuarioDTO.setLoginUsuario (login_usuario);
+        objusuarioDTO.setUsuarioUsuario(usuario_usuario);
+        objusuarioDTO.setEmailUsuario(email_usuario);
         objusuarioDTO.setSenhaUsuario(senha_usuario);
 
             UsuarioDAO objUsuarioDAO = new UsuarioDAO();       
@@ -316,6 +313,42 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnExcluir1ActionPerformed
 
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // Chamada do metodo Pesquisar
+
+        // Obtém o ID do campo de texto
+        int idUsuario = Integer.parseInt(txtIdUsuario.getText());
+        UsuarioDTO objdto =new UsuarioDTO();
+        objdto.setIdUsuario(idUsuario);
+        
+        // Cria uma instância do DAO
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.pesquisarUsuario(objdto);
+        
+
+        // Chama o método pesquisar e obtém o resultado
+        UsuarioDTO usuarioDTO = usuarioDAO.pesquisarUsuario(objdto);
+
+        if (usuarioDTO != null) {
+            // Preenche os campos com os dados do usuário encontrado
+            txtNome.setText(usuarioDTO.getNomeUsuario());
+            txtUsuario.setText(usuarioDTO.getUsuarioUsuario());
+            txtEmailUsuario.setText(usuarioDTO.getEmailUsuario());
+            txtSenhaUsuario.setText(usuarioDTO.getSenhaUsuario());
+        } else {
+            // Mostra uma mensagem de erro se o usuário não for encontrado
+            JOptionPane.showMessageDialog(null, "Usuário não cadastrado!");
+
+            //metodo para apagar os campos
+            UsuarioDAO objUsuarioDAO = new UsuarioDAO();
+            objUsuarioDAO.limpar();
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
@@ -327,9 +360,11 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblUsuario;
     public static javax.swing.JTextField txtEmailUsuario;
     public static javax.swing.JTextField txtIdUsuario;
-    public static javax.swing.JTextField txtNomeUsuario;
+    public static javax.swing.JTextField txtNome;
     public static javax.swing.JPasswordField txtSenhaUsuario;
+    public static javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

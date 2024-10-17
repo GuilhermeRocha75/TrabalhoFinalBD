@@ -4,9 +4,8 @@ package br.com.DTO;
 
 public class UsuarioDTO {
     private int idUsuario;
-    private String nomeUsuario, loginUsuario, senhaUsuario;
+    private String nomeUsuario, usuarioUsuario, emailUsuario, senhaUsuario;
 
-    
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -23,12 +22,12 @@ public class UsuarioDTO {
         this.nomeUsuario = nomeUsuario;
     }
 
-    public String getLoginUsuario() {
-        return loginUsuario;
+    public String getEmailUsuario() {
+        return emailUsuario;
     }
 
-    public void setLoginUsuario(String loginUsuario) {
-        this.loginUsuario = loginUsuario;
+    public void setEmailUsuario(String emailUsuario) {
+        this.emailUsuario = emailUsuario;
     }
 
     public String getSenhaUsuario() {
@@ -38,7 +37,16 @@ public class UsuarioDTO {
     public void setSenhaUsuario(String senhaUsuario) {
         this.senhaUsuario = senhaUsuario;
     }
-    
+
+    public String getUsuarioUsuario() {
+        return usuarioUsuario;
+    }
+
+    public void setUsuarioUsuario(String usuarioUsuario) {
+        this.usuarioUsuario = usuarioUsuario;
+    }
+
+   
     
     
     

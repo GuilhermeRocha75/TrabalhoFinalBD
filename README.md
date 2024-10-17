@@ -29,13 +29,15 @@
 ```sql
 
 
+
 create database trabalhofinalbd;
 use trabalhofinalbd;
 
 create table tb_usuarios(
 id_usuario int primary key,
-usuario varchar(50) not null,
-login varchar(50) not null unique,
+nome varchar(50) not null,
+usuario varchar(50) not null unique,
+email varchar(50) not null unique,
 senha varchar(15)not null
 );
 

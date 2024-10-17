@@ -17,14 +17,14 @@ public class UsuarioDAO {
     ResultSet rs = null;
     
     // Método para verificar login
-    public boolean logar(String login, String senha) {
-        String sql = "SELECT * FROM tb_usuarios WHERE login = ? AND senha = ?";
+    public boolean logar(UsuarioDTO objDTO) {
+        String sql = "SELECT * FROM tb_usuarios WHERE usuario = ? AND senha = ?";
         conexao = new ConexaoDAO().conector(); // Conecta ao banco de dados
 
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setString(1, login);
-            pst.setString(2, senha);
+            pst.setString(1, objDTO.getUsuarioUsuario());
+            pst.setString(2, objDTO.getSenhaUsuario());
 
             rs = pst.executeQuery();
 
@@ -46,29 +46,31 @@ public class UsuarioDAO {
    
      public void limpar(){
         TelaUsuarios.txtIdUsuario.setText(null);
-        TelaUsuarios.txtNomeUsuario.setText(null);
+        TelaUsuarios.txtUsuario.setText(null);
+        TelaUsuarios.txtNome.setText(null);
         TelaUsuarios.txtSenhaUsuario.setText(null);
         TelaUsuarios.txtEmailUsuario.setText(null);
     }
     
     
      //Metodo pesquisar
-    public UsuarioDTO pesquisarUsuario(int idUsuario) {
+    public UsuarioDTO pesquisarUsuario(UsuarioDTO objdto) {
         String sql = "SELECT * FROM tb_usuarios WHERE id_usuario = ?";
         conexao = new ConexaoDAO().conector();
         UsuarioDTO usuarioDTO = null;
 
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setInt(1, idUsuario);
+            pst.setInt(1, objdto.getIdUsuario());
             rs = pst.executeQuery();
 
             // Se encontrar um usuário, cria o objeto UsuarioDTO com os dados
             if (rs.next()) {
                 usuarioDTO = new UsuarioDTO();
                 usuarioDTO.setIdUsuario(rs.getInt("id_usuario"));
-                usuarioDTO.setNomeUsuario(rs.getString("usuario"));
-                usuarioDTO.setLoginUsuario(rs.getString("login"));
+                usuarioDTO.setNomeUsuario(rs.getString("nome"));
+                usuarioDTO.setUsuarioUsuario(rs.getString("usuario"));
+                usuarioDTO.setEmailUsuario(rs.getString("email"));
                 usuarioDTO.setSenhaUsuario(rs.getString("senha"));
             }
 
@@ -86,15 +88,16 @@ public class UsuarioDAO {
     
     //Metodo inserir/adicionar usuarios
     public void inserirUsuario(UsuarioDTO objUsuarioDTO){
-        String sql = "insert into tb_usuarios(id_usuario, usuario, login, senha) values(?, ?, ?, ?)";
+        String sql = "insert into tb_usuarios(id_usuario, nome, usuario, email, senha) values(?, ?, ?, ?)";
         conexao = new ConexaoDAO().conector();
         
         try {
             pst = conexao.prepareStatement(sql);
             pst.setInt(1, objUsuarioDTO.getIdUsuario());
             pst.setString(2, objUsuarioDTO.getNomeUsuario());
-            pst.setString(3, objUsuarioDTO.getLoginUsuario());
-            pst.setString(4, objUsuarioDTO.getSenhaUsuario());
+            pst.setString(3, objUsuarioDTO.getUsuarioUsuario());
+            pst.setString(4, objUsuarioDTO.getEmailUsuario());
+            pst.setString(5, objUsuarioDTO.getSenhaUsuario());
             
             pst.execute();
             pst.close();
@@ -106,15 +109,15 @@ public class UsuarioDAO {
 
     }   
       //Metodo para virificar se usuario ou id ja existem
-    public boolean verificarUsuarioExistente(int idUsuario, String loginUsuario) {
-        String sql = "SELECT * FROM tb_usuarios WHERE id_usuario = ? OR login = ?";
+    public boolean verificarUsuarioExistente(int idUsuario, String usuarioUsuario) {
+        String sql = "SELECT * FROM tb_usuarios WHERE id_usuario = ? OR usuario = ?";
         conexao = new ConexaoDAO().conector();
         boolean existe = false;
 
         try {
             pst = conexao.prepareStatement(sql);
             pst.setInt(1, idUsuario);
-            pst.setString(2, loginUsuario);
+            pst.setString(2, usuarioUsuario);
             
             rs = pst.executeQuery();
 
@@ -136,14 +139,15 @@ public class UsuarioDAO {
     
     //Metodo editar
     public void editar(UsuarioDTO objUsarioDTO){
-        String sql = "update tb_usuarios set usuario = ?, login = ?, senha = ? where id_usuario = ?";
+        String sql = "update tb_usuarios set nome = ?, usuario = ?, email = ?, senha = ? where id_usuario = ?";
          conexao = ConexaoDAO.conector();
          try {
                pst = conexao.prepareStatement(sql);
                pst.setString(1, objUsarioDTO.getNomeUsuario());
-               pst.setString(2, objUsarioDTO.getLoginUsuario());
-               pst.setString(3, objUsarioDTO.getSenhaUsuario());
-                pst.setInt(4, objUsarioDTO.getIdUsuario());
+               pst.setString(2, objUsarioDTO.getUsuarioUsuario());
+               pst.setString(3, objUsarioDTO.getEmailUsuario());
+               pst.setString(4, objUsarioDTO.getSenhaUsuario());
+                pst.setInt(5, objUsarioDTO.getIdUsuario());
                 
                int add = pst.executeUpdate();
                if (add >0){

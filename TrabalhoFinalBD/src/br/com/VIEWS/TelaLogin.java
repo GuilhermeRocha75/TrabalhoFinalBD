@@ -172,44 +172,18 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSenhaActionPerformed
 
     private void btnEntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntarActionPerformed
+   
+        String login = txtUsuario.getText();
+        String senha = txtSenha.getText();
+        
+        UsuarioDTO objDTO = new UsuarioDTO();
+         objDTO.setUsuarioUsuario(login);
+         objDTO.setSenhaUsuario(senha);
+         
+         UsuarioDAO objDAO = new UsuarioDAO();
+         objDAO.logar(objDTO);
+         
     
-        // Conectando ao banco de dados
-    Connection conexao = ConexaoDAO.conector();
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-
-    String sql = "select * from tb_usuarios where login = ? and senha = ?";
-    
-    try {
-        // Preparando a consulta
-        pst = conexao.prepareStatement(sql);
-        pst.setString(1, txtUsuario.getText());
-        pst.setString(2, txtSenha.getText());
-        
-        // Executando a query
-        rs = pst.executeQuery();
-        
-        if (rs.next()) {
-            // Login bem-sucedido, abrindo a tela principal
-            TelaPrincipal principal = new TelaPrincipal();
-            principal.setVisible(true);
-            dispose(); // Fechando a tela de login
-        } else {
-            // Se as credenciais estiverem incorretas
-            JOptionPane.showMessageDialog(null, "Usuário e/ou senha inválidos");
-        }
-        
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Erro ao logar: " + e);
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (pst != null) pst.close();
-            if (conexao != null) conexao.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao fechar recursos: " + e);
-        }
-    }
     }//GEN-LAST:event_btnEntarActionPerformed
 
     /**
