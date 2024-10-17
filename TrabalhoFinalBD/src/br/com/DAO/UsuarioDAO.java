@@ -17,14 +17,14 @@ public class UsuarioDAO {
     ResultSet rs = null;
     
     // Método para verificar login
-    public boolean logar(UsuarioDTO objDTO) {
+    public boolean logar(String login, String senha) {
         String sql = "SELECT * FROM tb_usuarios WHERE usuario = ? AND senha = ?";
         conexao = new ConexaoDAO().conector(); // Conecta ao banco de dados
 
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setString(1, objDTO.getUsuarioUsuario());
-            pst.setString(2, objDTO.getSenhaUsuario());
+            pst.setString(1, login);
+            pst.setString(2, senha);
 
             rs = pst.executeQuery();
 
@@ -54,14 +54,14 @@ public class UsuarioDAO {
     
     
      //Metodo pesquisar
-    public UsuarioDTO pesquisarUsuario(UsuarioDTO objdto) {
+    public UsuarioDTO pesquisarUsuario(int idUsuario) {
         String sql = "SELECT * FROM tb_usuarios WHERE id_usuario = ?";
         conexao = new ConexaoDAO().conector();
         UsuarioDTO usuarioDTO = null;
 
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setInt(1, objdto.getIdUsuario());
+            pst.setInt(1, idUsuario);
             rs = pst.executeQuery();
 
             // Se encontrar um usuário, cria o objeto UsuarioDTO com os dados
@@ -88,7 +88,7 @@ public class UsuarioDAO {
     
     //Metodo inserir/adicionar usuarios
     public void inserirUsuario(UsuarioDTO objUsuarioDTO){
-        String sql = "insert into tb_usuarios(id_usuario, nome, usuario, email, senha) values(?, ?, ?, ?)";
+        String sql = "insert into tb_usuarios(id_usuario, nome, usuario, email, senha) values(?, ?, ?, ?, ?)";
         conexao = new ConexaoDAO().conector();
         
         try {

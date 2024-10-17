@@ -173,17 +173,30 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnEntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntarActionPerformed
    
-        String login = txtUsuario.getText();
-        String senha = txtSenha.getText();
         
-        UsuarioDTO objDTO = new UsuarioDTO();
-         objDTO.setUsuarioUsuario(login);
-         objDTO.setSenhaUsuario(senha);
-         
-         UsuarioDAO objDAO = new UsuarioDAO();
-         objDAO.logar(objDTO);
-         
-    
+    // Obtém os valores dos campos de login e senha
+    String login = txtUsuario.getText();
+    String senha = new String(txtSenha.getText());
+
+    // Instancia a classe UsuarioDAO
+    UsuarioDAO dao = new UsuarioDAO();
+
+    // Chama o método logar e verifica o resultado
+    if (dao.logar(login, senha)) {
+        // Login bem-sucedido
+        JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
+
+        // Instancia a tela principal
+        TelaPrincipal telaPrincipal = new TelaPrincipal();
+        telaPrincipal.setVisible(true); // Mostra a tela principal
+
+        // Fecha a tela de login
+        this.dispose();
+    } else {
+        // Login falhou
+        JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.");
+    }
+        
     }//GEN-LAST:event_btnEntarActionPerformed
 
     /**

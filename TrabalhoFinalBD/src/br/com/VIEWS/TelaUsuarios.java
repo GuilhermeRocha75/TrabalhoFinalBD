@@ -322,16 +322,13 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
 
         // Obtém o ID do campo de texto
         int idUsuario = Integer.parseInt(txtIdUsuario.getText());
-        UsuarioDTO objdto =new UsuarioDTO();
-        objdto.setIdUsuario(idUsuario);
-        
+
         // Cria uma instância do DAO
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        usuarioDAO.pesquisarUsuario(objdto);
         
 
         // Chama o método pesquisar e obtém o resultado
-        UsuarioDTO usuarioDTO = usuarioDAO.pesquisarUsuario(objdto);
+        UsuarioDTO usuarioDTO = usuarioDAO.pesquisarUsuario(idUsuario);
 
         if (usuarioDTO != null) {
             // Preenche os campos com os dados do usuário encontrado
