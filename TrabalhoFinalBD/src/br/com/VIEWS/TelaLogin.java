@@ -183,8 +183,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Chama o método logar e verifica o resultado
     if (dao.logar(login, senha)) {
-        // Login bem-sucedido
-        JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
+       
 
         // Instancia a tela principal
         TelaPrincipal telaPrincipal = new TelaPrincipal();

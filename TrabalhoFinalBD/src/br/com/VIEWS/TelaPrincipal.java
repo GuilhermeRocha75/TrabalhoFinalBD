@@ -32,6 +32,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         subMenuUsuarios = new javax.swing.JMenu();
         submenuUsuarios = new javax.swing.JMenuItem();
         submenuClientes = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -73,6 +74,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         subMenuUsuarios.add(submenuClientes);
+
+        jMenuItem1.setText("Agenda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        subMenuUsuarios.add(jMenuItem1);
 
         MenuRel.add(subMenuUsuarios);
 
@@ -125,6 +134,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
      
     }//GEN-LAST:event_subMenuUsuariosActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+   
+        //chamar tela agenda
+        TelaAgenda tAgenda = new TelaAgenda();
+        tAgenda.setVisible(true);
+        DesktopPrincipal.add(tAgenda);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -166,6 +184,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuItem jMenuItem1;
     public static javax.swing.JMenu subMenuUsuarios;
     private javax.swing.JMenuItem submenuClientes;
     private javax.swing.JMenuItem submenuUsuarios;
